@@ -1,3 +1,7 @@
+# Testing using Selenium IDE
+
+Check the slides as the IDE version has changed.
+
 Install the Chrome or Firefox extension using the instructions on the Selenium site
 Open the comp0034_testing.side file (included in the repository) from Chrome
 Run the Flask app (e.g. in PyCharm)
