@@ -2,7 +2,6 @@
 {% set title = 'Profile Display' %}
 {% from "_formhelpers.html" import render_field %}
 {% block content %}
-    {#  for result in results #}
     {% for result, url in profiles %}
         <div class="card" style="width: 18rem;">
             <img class="card-img-top" src="{{ url }}" alt="User profile photo">

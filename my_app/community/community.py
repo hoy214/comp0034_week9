@@ -16,7 +16,7 @@ def index():
 @community_bp.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    profile = Profile.query.join(User.profile).filter(User.id == current_user.id).first()
+    profile = Profile.query.join(User).filter(User.id == current_user.id).first()
     if profile:
         return redirect(url_for('community.update_profile'))
     else:
@@ -54,7 +54,8 @@ def update_profile():
         profile.bio = form.bio.data
         profile.username = form.username.data
         db.session.commit()
-    return render_template('profile.html', form=form)
+        return redirect(url_for('community.display_profiles', username=profile.username))
+    return render_template('profiles.html', form=form)
 
 
 @community_bp.route('/display_profiles', methods=['POST', 'GET'])
