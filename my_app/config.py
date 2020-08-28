@@ -21,7 +21,10 @@ class TestConfig(Config):
     ENV = 'testing'
     DEBUG = False
     TESTING = True
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = False
+    #  To allow forms to be submitted from the tests without the CSRF token
+    WTF_CSRF_CHECK_DEFAULT = False
+    WTF_CSRF_ENABLED = False
 
 
 class DevConfig(Config):

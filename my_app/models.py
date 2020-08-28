@@ -26,7 +26,7 @@ class User(UserMixin, db.Model):
 class Country(db.Model):
     __tablename__ = "country"
     id = db.Column(db.Integer, primary_key=True)
-    country_name = db.Column(db.Text)
+    country_name = db.Column(db.Text, unique=True)
 
     def __repr__(self):
         return self.country_name

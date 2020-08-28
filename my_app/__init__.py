@@ -12,7 +12,7 @@ photos = UploadSet('photos', IMAGES)
 
 def create_app(config_classname):
     """
-    Initialise the Flask application.
+    Initialise and configure the Flask application.
     :type config_classname: Specifies the configuration class
     :rtype: Returns a configured Flask object
     """
@@ -27,6 +27,7 @@ def create_app(config_classname):
     with app.app_context():
         from my_app.models import User, Country, Profile
         db.create_all()
+        add_countries(app)
 
         from dash_app.dash import init_dashboard
         app = init_dashboard(app)
@@ -41,3 +42,21 @@ def create_app(config_classname):
     app.register_blueprint(community_bp)
 
     return app
+
+
+def add_countries(app):
+    """
+    Adds the list of countries to the country table if it doesn't already exist
+    :param app:
+    """
+    from my_app.models import Country
+    exists = Country.query.filter_by(id=1).scalar() is not None
+    if not exists:
+        data_path = app.config['DATA_PATH']
+        with open(data_path.joinpath('countries.txt'), "r") as countries:
+            for country in countries:
+                country = country.split("|")
+                country[1] = country[1].rstrip('\n')
+                c = Country(country_name=country[1])
+                db.session.add(c)
+            db.session.commit()
