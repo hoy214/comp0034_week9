@@ -15,6 +15,7 @@ setup(
         'flask-sqlalchemy',
         'flask-wtf',
         'dash-bootstrap-components',
-        'wtforms'
+        'wtforms',
+        'flask-reuploaded'
     ],
 )
