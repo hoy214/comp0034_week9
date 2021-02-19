@@ -9,3 +9,6 @@ plotly>=4.14.3
 WTForms~=2.3.3
 setuptools~=53.0.0
 Flask-Reuploaded~=0.5.0
+selenium~=3.141.0
+pytest~=6.2.2
+Flask-Testing~=0.8.1
