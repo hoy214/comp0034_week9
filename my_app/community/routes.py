@@ -29,15 +29,20 @@ def profile():
 def create_profile():
     form = ProfileForm()
     if request.method == 'POST' and form.validate_on_submit():
-        u = User.query.filter_by(id=current_user.id)
+        # Set the filename for the photo to None, this is the default if the user hasn't chosen to add a profile photo
         filename = None
+        # Check if the form contains a photo (photo is the field name we used in the ProfileForm class)
         if 'photo' in request.files:
+            # As long as the filename isn't empty then save the photo
             if request.files['photo'].filename != '':
+                # Save the photo using the global variable photos to get the location to save to
                 filename = photos.save(request.files['photo'])
-        p = Profile(area=repr(form.area.data), username=form.username.data, photo=filename, bio=form.bio.data,
+        # Build a new profile to be added to the database based on the fields in the form
+        # Note that the area.data is an object and we want to access the area property of the object
+        p = Profile(area=form.area.data.area, username=form.username.data, photo=filename, bio=form.bio.data,
                     user_id=current_user.id)
-        db.session.add(p)
-        db.session.commit()
+        db.session.add(p)  # Add the new Profile to the database session
+        db.session.commit()  # Saves the new Profile to the database
         return redirect(url_for('community.display_profiles', username=p.username))
     return render_template('profile.html', form=form)
 
@@ -47,15 +52,11 @@ def create_profile():
 def update_profile():
     profile = Profile.query.join(User).filter_by(id=current_user.id).first()
     form = ProfileForm(obj=profile)
-    # form = ProfileForm()
-    # form.area.data = profile.area
-    # form.bio.data = profile.bio
-    # form.username.data = profile.username
     if request.method == 'POST' and form.validate_on_submit():
         if 'photo' in request.files:
             filename = photos.save(request.files['photo'])
             profile.photo = filename
-        profile.area = form.area.data
+        profile.area = form.area.data.area
         profile.bio = form.bio.data
         profile.username = form.username.data
         db.session.commit()

@@ -11,10 +11,10 @@ from my_app import photos
 class ProfileForm(FlaskForm):
     """ Class for the profile form """
     username = StringField(label='Username', validators=[DataRequired(message='Username is required')])
+    bio = TextAreaField(label='Bio', description='Write something about yourself')
     photo = FileField('Profile picture', validators=[FileAllowed(photos, 'Images only!')])
     area = QuerySelectField(label='Your location', query_factory=lambda: Area.query.all(),
                             get_label='area', allow_blank=True)
-    bio = TextAreaField(label='Bio', description='Write something about yourself')
 
     def validate_username(self, username):
         profile = Profile.query.filter_by(username=username.data).first()
