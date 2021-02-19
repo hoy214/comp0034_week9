@@ -13,15 +13,24 @@ This is not the only way to do configure GitHub actions. If you have read other 
 way then please do so.
 
 Go to the Actions tab in the repository:
+
 ![](img/1.png)
+
 Find ‘Python application’ and click on ‘Set up this workflow’
+
 ![](img/2.png)
+
 This automatically creates a file called python-app.yml in your repository. You can name this differently if you wish,
 for example calculator-app.yml. Press start commit.
+
 ![](img/3.png)  
+
 When prompted select Commit new file.
+
 ![](img/4.png)  
+
 You should see the file added to the .github/workflows directory of your repository.
+
 ![](img/5.png)
 
 ### Review calculator-app.yml
@@ -43,11 +52,13 @@ name: Python application
 
 name helps you to identify the overall workflow and sections within it. The first name is for the workflow itself and is
 what will appear in your list of workflows seen when you click on the Actions tab in GitHub:
+
 ![](img/6.png)
 
 The names within the steps show the name of those steps. The screenshot below shows the results of one of the automated
 tests, you should see in the black area that there are sections that relate to each of the step names. Make sure you use
 meaningful names in your .yml!
+
 ![](img/7.png)
 
 on indicates when the workflow should run. In this case when there is a push to the main branch or a pull request on the
@@ -135,24 +146,30 @@ To see the results of the workflow go to Actions and select the Python applicati
 still to be run, or is still running you will see and amber coloured circle next to the workflow job and the status is
 shown in the Branch column. In the following screenshot the status is ‘Queued’ meaning that it is waiting on GitHub’s
 servers but hasn’t run yet.
+
 ![](img/8.png)
 
 In the following the actions are in progress.
+
 ![](img/9.png)
 
 Once the workflow has finished you will see either a red cross (as below)
 meaning it failed, or a green tick meaning it was successful.
+
 ![](img/10.png)
 
 To see the details of what happened, click on the workflow job (e.g. the one with the red cross in the screenshot
 below):
+
 ![](img/11.png)
 
 Then click on build in the left side menu:
+
 ![](img/12.png)
 
 You should then be able to expand the section in the black window pane that has a red cross next to it to see the
 details. You will need to review the error messages to try and understand what went wrong:
+
 ![](img/13.png)
 
 ## Test the workflow by making a change to the code
