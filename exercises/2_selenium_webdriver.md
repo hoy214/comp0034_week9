@@ -141,6 +141,9 @@ text = driver.find_element(By.CSS_SELECTOR, "h1").text
 
 You have already used Selenium Webdriver in week 5 for the Dash app testing activity then skip this step.
 
+This only provides support for running tests using the Chrome browser, you will need to investigate the documentation if
+you also wish to test with other supported browsers.
+
 Check your version of Chrome in the Chrome settings.
 
 For example, mine is: Version 84.0.4147.125.
@@ -165,15 +168,14 @@ My experience on a MacBook was that I also had to complete the following steps:
 
 ## Create test fixtures to support selenium
 
-The first fixture creates a ChromeDriver with options that are required for running in a CI environment. You will need
-these if you plan to use This only tests in Chrome, you will need to investigate the documentation if you also wish to
-test with other supported browsers.
+The first fixture creates a ChromeDriver with options that are required for running in a CI environment. Note that if
+you want to see the tests running on your computer then you should comment out the 'headless' option.
 
-The second fixure runs the Flask app in a thread. There is very little documentation explaining how to use Flask with
-Selenium and Unittest. You may wish to investigate flask-testing and use its `live_server` decorator rather than the
+The second fixure runs and stops the Flask app. There is very little documentation explaining how to use Flask with
+Selenium and Pytest. You may wish to investigate `pytest-flask` and use its `live_server` fixture rather than the
 following as it is supported and has better error handling.
 
-If you wish to use unittest rather than pytest then Flask-Testing is well supported by examples and documentation.
+If you wish to use unittest rather than pytest then `Flask-Testing` appears well supported by examples and documentation.
 
 ```python
 @pytest.fixture(scope='class')
@@ -191,7 +193,7 @@ def chrome_driver(request):
 
 
 @pytest.fixture(scope='class')
-def selenium(app):
+def run_app(app):
     """
     Fixture to run the Flask app
     A better alternative would be to use flask-testing live_server
@@ -204,11 +206,12 @@ def selenium(app):
 
 ## Create a new test file and test class
 
-Create a new test file e.g. `test_my_app_browser.py`. 
+Create a new test file e.g. `test_my_app_browser.py`.
 
 Create a new test class within it and add a test that the home page is available e.g.:
 
 ```python
+@pytest.mark.usefixtures('chrome_driver', 'run_app')
 class TestMyAppBrowser:
     def test_app_is_running(self, app):
         self.driver.get("http://127.0.0.1:5000/")
@@ -216,11 +219,46 @@ class TestMyAppBrowser:
 ```
 
 Add a test to test the signup process is successful e.g.:
+
 ```python
+
+    def test_signup_succeeds(self):
+        """
+        Test that a user can create an account using the signup form if all fields are filled out correctly,
+        and that they are redirected to the index page.
+        """
+
+        # Click signup menu link
+        self.driver.find_element_by_id("signup-nav").click()
+        self.driver.implicitly_wait(10)
+
+        # Test person data
+        first_name = "First"
+        last_name = "Last"
+        email = "email@ucl.ac.uk"
+        password = "password1"
+        password_repeat = "password1"
+
+        # Fill in registration form
+        self.driver.find_element_by_id("first_name").send_keys(first_name)
+        self.driver.find_element_by_id("last_name").send_keys(last_name)
+        self.driver.find_element_by_id("email").send_keys(email)
+        self.driver.find_element_by_id("password").send_keys(password)
+        self.driver.find_element_by_id("password_repeat").send_keys(password_repeat)
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(10)
+
+        # Assert that browser redirects to index page
+        assert self.driver.current_url == 'http://127.0.0.1:5000/'
+
+        # Assert success message is flashed on the index page
+        message = self.driver.find_element_by_class_name("list-unstyled").find_element_by_tag_name("li").text
+        assert f"Hello, {first_name} {last_name}. You are signed up." in message
 
 ```
 
 ## Over to you
+
 Try to create at least one more test e.g.
 
 - test creating a profile with username and bio succeeds

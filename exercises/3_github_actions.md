@@ -1,11 +1,10 @@
 # Using GitHub actions for CI and linting
 
-This should be a recap as we covered it in the last course but walk through an example using the example app.
-
 ## Recap of the COMP0034 tutorial (based on the calculator app)
 
 You should be able to follow the instructions and apply something similar for the Flask `my_app` example, using
-appropriate names.
+appropriate names. In the video I use the same process to set-up GitHub actions CI for the Flask `my_app`, the final .yml from that
+activity is included at the end of this document.
 
 ### Create the actions using a GitHub template
 
@@ -23,11 +22,11 @@ Find ‘Python application’ and click on ‘Set up this workflow’
 This automatically creates a file called python-app.yml in your repository. You can name this differently if you wish,
 for example calculator-app.yml. Press start commit.
 
-![](img/3.png)  
+![](img/3.png)
 
 When prompted select Commit new file.
 
-![](img/4.png)  
+![](img/4.png)
 
 You should see the file added to the .github/workflows directory of your repository.
 

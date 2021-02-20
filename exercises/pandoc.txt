@@ -1,0 +1,3 @@
+pandoc -V geometry:"top=2cm, bottom=1.5cm, left=2cm, right=2cm" 1_unit_testing.md -f gfm -o 1_unit_testing.pdf
+pandoc -V geometry:"top=2cm, bottom=1.5cm, left=2cm, right=2cm" 2_selenium_webdriver.md -f gfm -o 2_selenium_webdriver.pdf
+pandoc -V geometry:"top=2cm, bottom=1.5cm, left=2cm, right=2cm" 3_github_actions.md -f gfm -o 3_github_actions.pdf
