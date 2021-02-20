@@ -182,7 +182,6 @@ watch the progress of the test. Once the test has finished go and review the det
 ## my_app.yml (for reference)
 
 ```yaml
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
 name: Flask app CI and Lint
@@ -215,7 +214,7 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
+    - name: Test with pytest (excluding Selenium)
       run: |
-        pytest --verbose --cov=my_app --ignore=tests_unittest/
+        pytest --verbose --cov=my_app --ignore=tests_unittest/ --ignore=tests/test_my_app_browser.py
 ```
