@@ -175,7 +175,8 @@ The second fixure runs and stops the Flask app. There is very little documentati
 Selenium and Pytest. You may wish to investigate `pytest-flask` and use its `live_server` fixture rather than the
 following as it is supported and has better error handling.
 
-If you wish to use unittest rather than pytest then `Flask-Testing` appears well supported by examples and documentation.
+If you wish to use unittest rather than pytest then `Flask-Testing` appears supported by examples and documentation.
+See [exercise 4](4_unittest_flask_testing.md) for specific guidance for applying it to the code in this repo.
 
 ```python
 @pytest.fixture(scope='class')
@@ -222,38 +223,38 @@ Add a test to test the signup process is successful e.g.:
 
 ```python
 
-    def test_signup_succeeds(self):
-        """
-        Test that a user can create an account using the signup form if all fields are filled out correctly,
-        and that they are redirected to the index page.
-        """
+def test_signup_succeeds(self):
+    """
+    Test that a user can create an account using the signup form if all fields are filled out correctly,
+    and that they are redirected to the index page.
+    """
 
-        # Click signup menu link
-        self.driver.find_element_by_id("signup-nav").click()
-        self.driver.implicitly_wait(10)
+    # Click signup menu link
+    self.driver.find_element_by_id("signup-nav").click()
+    self.driver.implicitly_wait(10)
 
-        # Test person data
-        first_name = "First"
-        last_name = "Last"
-        email = "email@ucl.ac.uk"
-        password = "password1"
-        password_repeat = "password1"
+    # Test person data
+    first_name = "First"
+    last_name = "Last"
+    email = "email@ucl.ac.uk"
+    password = "password1"
+    password_repeat = "password1"
 
-        # Fill in registration form
-        self.driver.find_element_by_id("first_name").send_keys(first_name)
-        self.driver.find_element_by_id("last_name").send_keys(last_name)
-        self.driver.find_element_by_id("email").send_keys(email)
-        self.driver.find_element_by_id("password").send_keys(password)
-        self.driver.find_element_by_id("password_repeat").send_keys(password_repeat)
-        self.driver.find_element_by_id("submit").click()
-        self.driver.implicitly_wait(10)
+    # Fill in registration form
+    self.driver.find_element_by_id("first_name").send_keys(first_name)
+    self.driver.find_element_by_id("last_name").send_keys(last_name)
+    self.driver.find_element_by_id("email").send_keys(email)
+    self.driver.find_element_by_id("password").send_keys(password)
+    self.driver.find_element_by_id("password_repeat").send_keys(password_repeat)
+    self.driver.find_element_by_id("submit").click()
+    self.driver.implicitly_wait(10)
 
-        # Assert that browser redirects to index page
-        assert self.driver.current_url == 'http://127.0.0.1:5000/'
+    # Assert that browser redirects to index page
+    assert self.driver.current_url == 'http://127.0.0.1:5000/'
 
-        # Assert success message is flashed on the index page
-        message = self.driver.find_element_by_class_name("list-unstyled").find_element_by_tag_name("li").text
-        assert f"Hello, {first_name} {last_name}. You are signed up." in message
+    # Assert success message is flashed on the index page
+    message = self.driver.find_element_by_class_name("list-unstyled").find_element_by_tag_name("li").text
+    assert f"Hello, {first_name} {last_name}. You are signed up." in message
 
 ```
 

@@ -87,6 +87,10 @@ Selenium webdriver, which we will use in a later activity, works with both pytes
 
 Most of the activities in this course use pytest since this is what was used in COMP0035.
 
+If you wish to use unittest rather than pytest then `Flask-Testing` appears supported by examples and documentation.
+See [exercise 4](4_unittest_flask_testing.md) for specific guidance for applying it to the code in this repo.
+
+
 ## Configure testing for the project in your IDE
 
 You will need to install the following (these are in requirements.txt).

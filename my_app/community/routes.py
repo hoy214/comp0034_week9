@@ -83,6 +83,7 @@ def display_profiles(username=None):
         return redirect(url_for("community.index"))
     urls = []
     for result in results:
-        url = photos.url(result.photo)
-        urls.append(url)
+        if result.photo:
+            url = photos.url(result.photo)
+            urls.append(url)
     return render_template('display_profile.html', profiles=zip(results, urls))
