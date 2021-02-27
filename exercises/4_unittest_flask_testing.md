@@ -4,8 +4,8 @@
 
 This is an additional activity created for the groups that prefer to use unittest and Flask-Testing.
 
-This supplements activities 1, 2 and 3 with specific additional guidance for applying the learning from those activities to testing
-with unittest rather than pytest. 
+This supplements activities 1, 2 and 3 with specific additional guidance for applying the learning from those activities
+to testing with unittest rather than pytest.
 
 Following this exercise without the previous exercises won't be sufficient.
 
@@ -18,7 +18,9 @@ Unittest is installed with Python so you don't need to explicitly install it.
 For students using PyCharm, go to the Settings/Preferences and go to Tools > Python Integrated Tools and change the
 default test runner to be unittest.
 
-You will need to install [Flask-Testing](https://flask-testing.readthedocs.io/en/latest/) e.g. `pip install Flask-Testing`or in PyCharm you can add it from Settings/Preferences > Project > Python Interpreter.
+You will need to install
+[Flask-Testing](https://flask-testing.readthedocs.io/en/latest/) e.g. `pip install Flask-Testing`
+or in PyCharm you can add it from Settings/Preferences > Project > Python Interpreter.
 
 ### Basic test structure
 
@@ -51,9 +53,11 @@ if __name__ == '__main__':
 
 #### Fixtures
 
-Unittest uses methods for creating fixtures for [setup and teardown](https://docs.python.org/3/library/unittest.html#unittest.TestCase).
+Unittest uses methods for creating fixtures
+for [setup and teardown](https://docs.python.org/3/library/unittest.html#unittest.TestCase).
 
-Flask-Testing supports `setUp` and `tearDown` and provides an additional method `create_all` to create a Flask test client app.
+Flask-Testing supports `setUp` and `tearDown` and provides an additional method `create_all` to create a Flask test
+client app.
 
 Create a BaseTestCase that inherits from Flask-Testing TestCase and LiveServerTestCase e.g.
 
@@ -63,7 +67,7 @@ from my_app import db, config, create_app
 from flask_testing import TestCase, LiveServerTestCase
 
 
-class BaseTestCase(TestCase):
+class BaseTestCase(TestCase, LiveServerTestCase):
     """Base test case."""
     def create_app(self):
         app = create_app(config.TestingConfig)
@@ -109,7 +113,8 @@ class BaseTestCase(TestCase, LiveServerTestCase):
 
 ### Assertions
 
-Whereas pytest uses 'assert', unittest uses a range of different assertions [listed in the API test class documentation](https://docs.python.org/3/library/unittest.html#unittest.TestCase) e.g.
+Whereas pytest uses 'assert', unittest uses a range of different assertions [listed in the API test class documentation](https://docs.python.org/3/library/unittest.html#unittest.TestCase)
+e.g.
 
 ```text
 assertEqual
@@ -137,14 +142,16 @@ assertNot
 
 ### Coverage
 
-If not already installed then install [coverage](https://coverage.readthedocs.io/en/coverage-5.4/).
+If not already installed then install [coverage.](https://coverage.readthedocs.io/en/coverage-5.4/).
 
 The documentation explains how to run unittest tests from the command line.
 
 To run it in PyCharm, right click on the test or the tests directory in the Project pane and select to 'Run unittest
 with Coverage'.
 
-## Testing with Selenium ChromeDriver
+Testing with Selenium ChromeDriver
+----------------------------------
+
 To test with Flask-Testing and Selenium ChromeDriver you can configure the driver in the base case e.g.:
 
 ```python
@@ -161,7 +168,7 @@ class TestBase(LiveServerTestCase):
 
     def create_app(self):
         app = create_app(config.TestingConfig)
-        app.config['LIVESERVER_PORT'] = 0
+        app.config['LIVESERVER_PORT'] = 8943
         return app
 
     def setUp(self):
@@ -219,6 +226,7 @@ class TestRegistration(TestBase):
 ```
 
 ## GitHub actions
+
 See exercise 4 for how to set-up GitHub actions.
 
 You will need the following .yml instead of that shown in the original exercise:
