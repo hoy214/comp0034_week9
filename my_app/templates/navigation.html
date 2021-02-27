@@ -15,8 +15,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for("community.index") }}">Community</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/dash_app/">Dash app</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">Charts</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/dash_app/">Dash app</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for("main.mpl") }}">Matplotlib chart</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for("main.px") }}">PlotlyExpress chart</a></li>
+                    </ul>
                 </li>
                 {% if current_user.is_anonymous %}
                     <li class="nav-item">
